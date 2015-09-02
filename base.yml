@@ -4,6 +4,7 @@ consul:
    - "8500:8500"
   environment:
   - DC_NAME=dc1
+  - BOOTSTRAP_CONSUL=true
   dns: 127.0.0.1
   hostname: consul
   privileged: true
@@ -16,7 +17,65 @@ flink:
   - "6123:6123"
   environment:
   - DC_NAME=dc1
-  dns: 127.0.0.1
   volumes:
   - ./data/:/data/
 
+zkui:
+    hostname: zkui
+    dns: 127.0.0.1
+    dns_search:
+    - node.consul
+    - service.consul
+    image: qnib/zkui
+    environment:
+    - DC_NAME=dc1
+    ports:
+    - 9090:9090
+    privileged: true
+
+zookeeper:
+    hostname: zookeeper
+    dns: 127.0.0.1
+    dns_search:
+    - node.consul
+    - service.consul
+    image: qnib/zookeeper
+    environment:
+    - DC_NAME=dc1
+    privileged: true
+
+kafka:
+    hostname: kafka
+    dns: 127.0.0.1
+    dns_search:
+    - node.consul
+    - service.consul
+    image: qnib/kafka
+    environment:
+    - DC_NAME=dc1
+    - KAFKA_ADDV_INTERNAL_IP=true
+    privileged: true
+
+kafkaMgr:
+    image: sheepkiller/kafka-manager
+    dns: 172.17.0.97
+    ports: 
+     - 9000:9000
+    environment:
+     - DC_NAME=dc1
+     - ZK_HOSTS="zookeeper.service.consul:2181"
+    volumes:
+     - ./conf/:/kafka-manager-1.2.7/conf/
+
+kafkaMonitor:
+    hostname: kafka-monitor
+    dns: 127.0.0.1
+    dns_search:
+    - node.consul
+    - service.consul
+    image: qnib/kafka-monitor
+    environment:
+    - DC_NAME=dc1
+    ports:
+    - 8080:8080
+    privileged: true

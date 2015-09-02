@@ -7,5 +7,44 @@ flink:
     extends:
         file: base.yml
         service: flink
+    net: host
     links:
     - consul:consul
+
+zkui:
+    extends:
+        file: base.yml
+        service: zkui
+    links:
+    - consul:consul
+
+zookeeper:
+    extends:
+        file: base.yml
+        service: zookeeper
+    links:
+    - consul:consul
+
+kafka:
+    extends:
+        file: base.yml
+        service: kafka
+    links:
+    - consul:consul
+    - zookeeper:zookeeper
+
+kafkaMgr:
+    extends:
+        file: base.yml
+        service: kafkaMgr
+    links:
+    - consul:consul
+    - zookeeper:zookeeper
+
+kafkaMonitor:
+    extends:
+        file: base.yml
+        service: kafkaMonitor
+    links:
+    - consul:consul
+    - kafka:kafka
