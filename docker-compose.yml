@@ -1,0 +1,11 @@
+consul:
+    extends:
+        file: base.yml
+        service: consul
+
+flink:
+    extends:
+        file: base.yml
+        service: flink
+    links:
+    - consul:consul

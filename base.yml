@@ -1,0 +1,19 @@
+consul:
+  image: qnib/consul
+  ports:
+   - "8500:8500"
+  environment:
+  - DC_NAME=dc1
+  dns: 127.0.0.1
+  hostname: consul
+  privileged: true
+
+flink:
+  image: qnib/flink
+  ports: 
+  - "8081:8081"
+  environment:
+  - DC_NAME=dc1
+  dns: 127.0.0.1
+  hostname: flink
+
