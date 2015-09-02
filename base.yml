@@ -10,10 +10,13 @@ consul:
 
 flink:
   image: qnib/flink
+  hostname: flink
   ports: 
   - "8081:8081"
+  - "6123:6123"
   environment:
   - DC_NAME=dc1
   dns: 127.0.0.1
-  hostname: flink
+  volumes:
+  - ./data/:/data/
 

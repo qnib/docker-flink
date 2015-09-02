@@ -7,5 +7,6 @@ RUN curl -fsL http://mirror.synyx.de/apache/flink/flink-${FLINK_VER}/flink-${FLI
     mv /opt/flink-${FLINK_VER} /opt/flink/
 ADD etc/supervisord.d/flink.ini /etc/supervisord.d/
 ADD opt/qnib/flink/bin/start_flink.sh /opt/qnib/flink/bin/
+ADD opt/flink/conf/flink-conf.yaml /opt/flink/conf/
 
 
