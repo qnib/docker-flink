@@ -1,9 +1,10 @@
 ###### Docker image
 FROM qnib/hadoop
 
-ENV FLINK_VER=0.9.1 \
-    HADOOP_VER=hadoop2
-RUN curl -fsL http://mirror.synyx.de/apache/flink/flink-${FLINK_VER}/flink-${FLINK_VER}-bin-${HADOOP_VER}.tgz |tar xzf - -C /opt/ && \
+ENV FLINK_VER=0.10.1 \
+    HADOOP_VER=hadoop27 \
+    SCALA_VER=2.11
+RUN curl -fsL http://mirror.synyx.de/apache/flink/flink-${FLINK_VER}/flink-${FLINK_VER}-bin-${HADOOP_VER}-scala_${SCALA_VER}.tgz |tar xzf - -C /opt/ && \
     mv /opt/flink-${FLINK_VER} /opt/flink/
 ADD etc/supervisord.d/flink.ini /etc/supervisord.d/
 ADD opt/qnib/flink/bin/start_flink.sh /opt/qnib/flink/bin/
